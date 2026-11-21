@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact — Sunder Construction</title>
+<meta name="description" content="Request an estimate from Sunder Construction. Send a few details about your house and project.">
+<meta name="theme-color" content="#ebddc9">
+<link rel="icon" href="assets/sunder-spiral.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bowlby+One&amp;family=Rokkitt:wght@400;700&amp;display=swap">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/site.css">
+<script src="js/site.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="site">
+<img class="bg-mark is-on" src="assets/sunder-spiral.svg" alt="" aria-hidden="true">
+<header class="nav">
+<div class="wrap nav-in">
+<a class="nav-logo" href="index.html" aria-label="Sunder home"><img src="assets/sunder-wordmark.svg" alt="Sunder" width="170" height="44"></a>
+<nav class="nav-links" aria-label="Main">
+<a href="index.html">About</a>
+<a href="projects.html">Projects</a>
+<a href="contact.html" aria-current="page">Contact</a>
+<span class="nav-ul" aria-hidden="true"></span>
+</nav>
+</div>
+</header>
+
+<main id="main">
+<section class="wrap contact">
+<div class="contact-info">
+<h1 class="page-title line"><span class="accent">Let’s</span> talk.</h1>
+<p class="lead">Send a few details about the house and the project. We reply within [two business days] to set up a walkthrough.</p>
+<div class="contact-lines">
+<a href="tel:+10000000000">[Phone]</a>
+<a href="mailto:hello@example.com">[Email]</a>
+<span>Serving [service area]</span>
+</div>
+</div>
+<div class="contact-card">
+<!-- Set action to your form endpoint (Formspree, Basin, etc.). With action="#" the form shows the thank-you state without sending. -->
+<form class="form" id="estimate-form" action="#" method="post" novalidate>
+<div class="field">
+<label for="f-name">Name <span class="req">(required)</span></label>
+<input id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="f-name-err">
+<p class="field-error" id="f-name-err" hidden></p>
+</div>
+<div class="field">
+<label for="f-email">Email <span class="req">(required)</span></label>
+<input id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="f-email-err">
+<p class="field-error" id="f-email-err" hidden></p>
+</div>
+<div class="field">
+<label for="f-phone">Phone</label>
+<input id="f-phone" name="phone" type="tel" autocomplete="tel" aria-describedby="f-phone-err">
+<p class="field-error" id="f-phone-err" hidden></p>
+</div>
+<div class="field">
+<label for="f-type">Project type</label>
+<select id="f-type" name="type" aria-describedby="f-type-err"><option value="" disabled selected>Choose one</option><option>General contracting</option><option>Remodel</option><option>Finish carpentry</option><option>Not sure yet</option></select>
+<p class="field-error" id="f-type-err" hidden></p>
+</div>
+<div class="field field-wide">
+<label for="f-message">Tell us about the project <span class="req">(required)</span></label>
+<textarea id="f-message" name="message" rows="5" required aria-describedby="f-message-err"></textarea>
+<p class="field-error" id="f-message-err" hidden></p>
+</div>
+<p class="form-alert" role="alert" hidden>Something went wrong sending your request. Please try again, or call us.</p>
+<div class="field-wide"><button class="btn btn-primary" type="submit">Send</button></div>
+</form>
+<div class="form-done" id="form-done" role="status" tabindex="-1" hidden>
+<h3>Thanks — we got it</h3>
+<p>We’ll be in touch within two business days to set up a walkthrough.</p>
+</div>
+</div>
+</section>
+</main>
+</div>
+</body>
+</html>
