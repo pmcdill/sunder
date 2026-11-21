@@ -183,56 +183,38 @@
   }
   $$('.gallery').forEach(setupGallery);
 
-  /* ---------- Contact form ---------- */
+  /* ---------- Contact form (JobTread) ----------
+     JobTread's web-form.js handles submission. This only replaces the browser's
+     validation bubbles with inline, on-brand messages; it never touches submit. */
   var form = $('#estimate-form');
   if (form) {
-    var endpoint = form.getAttribute('action');
-    var checks = {
-      name: function (v) { return v ? '' : 'Enter your name.'; },
-      email: function (v) { return v && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v) ? '' : 'Enter an email address like name@example.com.'; },
-      message: function (v) { return v ? '' : 'Tell us a little about the project.'; }
+    var messages = {
+      valueMissing: function (el) { return el.type === 'tel' ? 'Enter a phone number.' : (el.name === 'contact.name' ? 'Enter your name.' : (el.name === 'location.address' ? 'Enter the project address.' : 'Tell us a little about the project.')); },
+      typeMismatch: function () { return 'Enter an email address like name@example.com.'; }
     };
-    function setError(name, msg) {
-      var field = form.elements[name].closest('.field');
-      var err = $('.field-error', field);
-      var input = form.elements[name];
+    function errFor(el) { return document.getElementById(el.id + '-err'); }
+    function showError(el, msg) {
+      var field = el.closest('.field'), err = errFor(el);
+      if (!field || !err) return;
       field.classList.toggle('has-error', !!msg);
       err.hidden = !msg;
-      err.textContent = msg;
-      if (msg) input.setAttribute('aria-invalid', 'true'); else input.removeAttribute('aria-invalid');
+      err.textContent = msg || '';
+      if (msg) el.setAttribute('aria-invalid', 'true'); else el.removeAttribute('aria-invalid');
     }
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var firstBad = null;
-      Object.keys(checks).forEach(function (name) {
-        var msg = checks[name](form.elements[name].value.trim());
-        setError(name, msg);
-        if (msg && !firstBad) firstBad = form.elements[name];
-      });
-      if (firstBad) { firstBad.focus(); return; }
-
-      var btn = $('button[type="submit"]', form);
-      var alert = $('.form-alert', form);
-      alert.hidden = true;
-      btn.disabled = true;
-      btn.textContent = 'Sending…';
-
-      // No endpoint configured yet: show the thank-you state so the flow can be reviewed.
-      var send = endpoint && endpoint !== '#'
-        ? fetch(endpoint, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } })
-            .then(function (r) { if (!r.ok) throw new Error(r.status); })
-        : Promise.resolve();
-
-      send.then(function () {
-        var done = $('#form-done');
-        form.hidden = true;
-        done.hidden = false;
-        done.focus();
-      }).catch(function () {
-        alert.hidden = false;
-        btn.disabled = false;
-        btn.textContent = 'Send';
-      });
+    var firstInvalidHandled = false;
+    form.addEventListener('invalid', function (e) {
+      var el = e.target;
+      e.preventDefault(); // hide the browser bubble; show ours instead
+      var v = el.validity, msg = '';
+      if (v.valueMissing) msg = messages.valueMissing(el);
+      else if (v.typeMismatch) msg = messages.typeMismatch(el);
+      else msg = el.validationMessage;
+      showError(el, msg);
+      if (!firstInvalidHandled) { firstInvalidHandled = true; el.focus(); setTimeout(function () { firstInvalidHandled = false; }, 0); }
+    }, true);
+    form.addEventListener('input', function (e) {
+      var el = e.target;
+      if (el.getAttribute('aria-invalid') === 'true' && el.checkValidity()) showError(el, '');
     });
   }
 })();

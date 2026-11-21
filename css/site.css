@@ -202,6 +202,11 @@ a:hover { color: var(--orange-dark); }
 .form-done h3::before { content: "\2713"; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; margin-right: 12px; border-radius: 999px; background: var(--orange-dark); color: #fff; font-size: 22px; vertical-align: middle; animation: pop .5s cubic-bezier(.2, .7, .2, 1) both; }
 .form-done p { margin: 0; }
 @keyframes pop { 0% { transform: scale(0); opacity: 0; } 60% { transform: scale(1.2); opacity: 1; } 100% { transform: scale(1); } }
+.field input[type="file"] { min-height: 0; padding: 8px; font-size: 16px; cursor: pointer; }
+.field input[type="file"]::file-selector-button { margin-right: 12px; min-height: 40px; padding: 0 16px; border: 2px solid var(--ink); border-radius: var(--radius-md); background: transparent; color: var(--ink); font-family: var(--font-display); font-size: 14px; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; transition: background-color .15s, color .15s; }
+.field input[type="file"]:hover::file-selector-button { background: var(--ink); color: var(--tan-light); }
+/* JobTread swaps in its own thank-you message after a successful send; give whatever it renders the site type */
+.jtwf:not(:has(.field)) { display: block; font-family: var(--font-display); font-size: 26px; line-height: 1.2; text-transform: uppercase; }
 @media (max-width: 640px) { .form { grid-template-columns: 1fr; } }
 
 /* ---------- Motion ---------- */

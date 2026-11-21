@@ -14,7 +14,7 @@ Built from "version G" of the Sunder design canvas in Claude. Keep changes faith
 
 - `css/tokens.css`: brand design tokens (colours, fonts, spacing, radii). Use these variables; don't hard-code hex values.
 - `css/site.css`: all page and component styles, grouped by section.
-- `js/site.js`: shared behaviour (sticky compact nav, sliding nav underline, scroll reveals, parallax, fixed background spiral, project galleries and lightbox, contact form).
+- `js/site.js`: shared behaviour (sticky compact nav, sliding nav underline, scroll reveals, parallax, fixed background spiral, project galleries and lightbox, inline validation messages for the JobTread contact form).
 - `assets/`: logo artwork. `sunder-spiral.svg` is the static spiral; `sunder-spiral-animated.svg` is a standalone animated version for use elsewhere (not used by the pages).
 
 The header, nav and footer markup is repeated in each HTML file. If you change one, change all three.
@@ -45,5 +45,5 @@ The header, nav and footer markup is repeated in each HTML file. If you change o
 Placeholders are in square brackets: phone, email, service area, license number, founding year, state, Ky's quote, project names and descriptions, and photos.
 
 - **Photos**: in `projects.html`, replace each placeholder `.gallery-slide` with `<div class="gallery-slide"><img src="..." alt="..." data-full="large.jpg"></div>`. Dots and the lightbox pick them up automatically. The owner portrait on About is a `.photo` placeholder: swap in `<img class="par" src="..." alt="...">` to keep the parallax.
-- **Contact form**: `#estimate-form` has `action="#"`, which shows the thank-you state without sending anything. Set `action` to a form endpoint (Formspree, Basin, Netlify Forms, etc.) to receive submissions. `site.js` POSTs `FormData` and expects a 2xx response.
+- **Contact form**: a restyled JobTread web form. Submissions go into Sunder's JobTread account as leads. JobTread's `web-form.js` (loaded at the end of the form) finds the form by `data-jobtread-web-form` and handles submission and the thank-you message (`data-success-message`). Never change the form's `data-*` attributes, the submit button's `data-submit-button`, any field `name`, or the Project type option text: they map to JobTread fields. `site.js` only swaps the browser's validation bubbles for inline messages. If fields change in JobTread, re-copy the embed code and carry the new names and keys over.
 - The `tel:` and `mailto:` links on Contact use dummy values.
